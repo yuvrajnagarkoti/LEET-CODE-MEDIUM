@@ -24,8 +24,8 @@ void nextPermutation(int *a, int s) {
     }
     for (j = i + 1, temp = s - 1; j < temp; j++, temp--)
     {
-        int sTemp = a[j];
+        int stemp = a[j];
         a[j] = a[temp];
-        a[temp] = sTemp;
+        a[temp] = stemp;
     }
 }
