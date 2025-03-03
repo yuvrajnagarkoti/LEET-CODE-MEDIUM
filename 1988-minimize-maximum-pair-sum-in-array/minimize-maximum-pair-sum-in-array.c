@@ -1,22 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 // Comparator function for ascending order sorting
 int compare(const void *a, const void *b) {
     return (*(int*)a - *(int*)b);
 }
 
-#define max(a, b) ((a) > (b) ? (a) : (b))  // Macro to find max
-
 int minPairSum(int* nums, int n) {
-    // Step 1: Sort the array in ascending order
+    // Sort in ascending order (O(n log n))
     qsort(nums, n, sizeof(int), compare);
 
-    // Step 2: Find the maximum pair sum
+    // Two-pointer approach to find max pair sum in O(n)
     int maxSum = 0;
     for (int i = 0, j = n - 1; i < j; i++, j--) {
-        maxSum = max(maxSum, nums[i] + nums[j]);
+        int pairSum = nums[i] + nums[j];
+        if (pairSum > maxSum) {
+            maxSum = pairSum;
+        }
     }
-
     return maxSum;
 }
