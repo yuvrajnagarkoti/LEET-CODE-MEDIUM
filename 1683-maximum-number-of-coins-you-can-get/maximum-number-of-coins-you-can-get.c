@@ -9,7 +9,8 @@ int maxCoins(int* piles, int pilesSize) {
 
     // Step 2: Pick every second element from sorted piles, skipping every third pick
     int sum = 0;
-    for (int i = 1; i < pilesSize * 2 / 3; i += 2) {
+    int n=pilesSize * 2 / 3;
+    for (int i = 1; i < n; i += 2) {
         sum += piles[i];
     }
 
