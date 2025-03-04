@@ -1,41 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-// Corrected comparator function for sorting vowels
-int compare(const void *a, const void *b) {
-    return (*(int*)a - *(int*)b);
+// Function to check if a character is a vowel
+bool isVowel(char c) {
+    return (c == 'a' || c == 'A' || c == 'e' || c == 'E' ||
+            c == 'i' || c == 'I' || c == 'o' || c == 'O' ||
+            c == 'u' || c == 'U');
 }
 
-char* sortVowels(char* s)
-{
-    int i, j = 0, n = strlen(s);
-    // Allocate memory for vowels
-    int *a = (int *)malloc(n * sizeof(int));
-    // Extract vowels
-    for (i = 0; i < n; i++) {
-        if (s[i] == 'a' || s[i] == 'A' || s[i] == 'e' || s[i] == 'E' ||
-            s[i] == 'i' || s[i] == 'I' || s[i] == 'o' || s[i] == 'O' ||
-            s[i] == 'u' || s[i] == 'U') {
-            a[j++] = s[i];
+// Comparator function for sorting vowels
+int compare(const void *a, const void *b) {
+    return (*(char*)a - *(char*)b);  // Sort vowels in ascending order
+}
+
+char* sortVowels(char* s) {
+    int n = strlen(s);
+    // Dynamically allocate memory for vowels and their positions
+    char *vowels = (char*)malloc(n * sizeof(char));
+    int *index = (int*)malloc(n * sizeof(int));
+    int count = 0;
+    // Step 1: Extract vowels and store their positions
+    for (int i = 0; i < n; i++) {
+        if (isVowel(s[i])) {
+            vowels[count] = s[i];  // Store vowel
+            index[count] = i;       // Store position
+            count++;
         }
     }
-    // Sort vowels
-    qsort(a, j, sizeof(int), compare);
-    // Replace vowels in original string
-    j = 0;
-    for (i = 0; i < n; i++)
-    {
-        if (s[i] == 'a' || s[i] == 'A' ||
-            s[i] == 'e' || s[i] == 'E' ||
-            s[i] == 'i' || s[i] == 'I' ||
-            s[i] == 'o' || s[i] == 'O' ||
-            s[i] == 'u' || s[i] == 'U')
-        {
-                s[i] = a[j++];
-        }
+    // Step 2: Sort only the vowels
+    qsort(vowels, count, sizeof(char), compare);
+    // Step 3: Put sorted vowels back into their original positions
+    for (int i = 0; i < count; i++) {
+        s[index[i]] = vowels[i];
     }
     // Free allocated memory
-    free(a);
+    free(vowels);
+    free(index);
     return s;
 }
