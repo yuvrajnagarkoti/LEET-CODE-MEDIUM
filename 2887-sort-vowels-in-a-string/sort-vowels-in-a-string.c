@@ -30,7 +30,6 @@ char* sortVowels(char* s)
     int n = strlen(s);
     char vowels[n];
     int count = 0;
-
     for (int i = 0; i < n; i++) 
     {
         if (isVowel(s[i])) 
@@ -38,9 +37,7 @@ char* sortVowels(char* s)
             vowels[count++] = s[i];
         }
     }
-
     countingSort(vowels, count);
-
     int index = 0;
     for (int i = 0; i < n; i++) 
     {
