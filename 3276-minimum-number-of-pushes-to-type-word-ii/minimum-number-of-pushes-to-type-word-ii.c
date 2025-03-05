@@ -1,51 +1,28 @@
-int compare(const void *a, const void *b)
+int com(const void*a,const void *b)
 {
-    return ((int *)b)[1] - ((int *)a)[1];
+    return (*(int*)a-*(int*)b);
 }
 
-int minimumPushes(char* word)
+int minimumPushes(char* word) 
 {
-    int count[26] = {0};
-    int i,z=0,c=0,k=1,index = 0;
-    for (i = 0; word[i] != '\0'; i++)
+  int i,len,*arr,re=0;
+  len=strlen(word);
+  arr=calloc(sizeof(int),26);
+  for(i=0;i<len;++i)
+    arr[(int)word[i]-97]+=1;
+  qsort(arr,26,sizeof(int),com);
+  for(i=25;i>=0;--i)
     {
-        count[word[i] - 'a']++;
-    }
-    int charCount[26][2];
-    for (i = 0; i < 26; i++)
-    {
-        charCount[i][0] = i + 'a';
-        charCount[i][1] = count[i];
-    }
-    qsort(charCount, 26, sizeof(charCount[0]), compare);
-    for(i=0;i<26;i++)
-    {
-        if(charCount[i][1]==0)
-            continue;
+        if(arr[i]==0)
+          break;
+        else if(i>=18)
+          re+=arr[i];
+        else if(i>=10)
+          re+=(arr[i]*2);
+        else if(i>=2)
+          re+=(arr[i]*3);
         else
-        {
-            z=z+1;
-            if (z <= 8)
-            {
-                c=c+charCount[i][1];
-            }
-            else if (z <= 16)
-            {
-                k = 2;
-                c= c + (charCount[i][1] * k);
-            }
-            else if (z <= 24)
-            {
-                k = 3;
-                c= c + (charCount[i][1] * k);
-            }
-            else
-            {
-                k = 4;
-                c= c + (charCount[i][1] * k);
-            }
-        }
+          re+=(arr[i]*4);
     }
-    return c;
+  return re;
 }
-
