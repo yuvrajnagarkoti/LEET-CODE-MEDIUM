@@ -7,13 +7,15 @@ void countSort(int arr[], int n) {
             max = arr[i];
         }
     }
-    int *count=(int *)calloc(max+1,sizeof(int));
+
+    // Allocate memory for count array
+    int *count = (int *)calloc(max + 1, sizeof(int));
+
     // Store the count of each element
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         count[arr[i]]++;
     }
-    
+
     // Modify the count array to store cumulative count
     for (int i = 1; i <= max; i++) {
         count[i] += count[i - 1];
@@ -30,23 +32,18 @@ void countSort(int arr[], int n) {
     for (int i = 0; i < n; i++) {
         arr[i] = output[i];
     }
+    // Free dynamically allocated memory
+    free(count);
 }
 
+// Function to determine max ice creams that can be bought
+int maxIceCream(int *costs, int size, int coins) {
+    countSort(costs, size);
 
-int maxIceCream(int* costs, int size, int coins)
-{
-    int i;
-    countSort(costs,size);
-    i=0;
-    while(coins>0 && i<size)
-    {
-        if(coins >= costs[i])
-        {
-            coins = coins - costs[i];
-            i=i+1;
-        }
-        else
-            break;
+    int i = 0;
+    while (i < size && coins >= costs[i]) {  // Ensure coins >= costs[i]
+        coins -= costs[i];
+        i++;
     }
     return i;
 }
