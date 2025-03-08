@@ -1,58 +1,64 @@
-// Merge function for Merge Sort
-void merge(int arr[], int low, int mid, int high) {
-    int i = low, j = mid + 1, k = 0;
-    int *temp = (int *)malloc((high - low + 1) * sizeof(int));
-
-    while (i <= mid && j <= high) {
-        if (arr[i] > arr[j]) // Sorting in decreasing order
-            temp[k++] = arr[i++];
-        else
-            temp[k++] = arr[j++];
-    }
-
-    while (i <= mid) temp[k++] = arr[i++];
-    while (j <= high) temp[k++] = arr[j++];
-
-    for (i = low, k = 0; i <= high; i++, k++)
-        arr[i] = temp[k];
-
-    free(temp);
+static inline void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-// Merge Sort function (Descending order)
-void mergeSort(int arr[], int low, int high) {
-    if (low < high) {
-        int mid = (low + high) / 2;
-        mergeSort(arr, low, mid);
-        mergeSort(arr, mid + 1, high);
-        merge(arr, low, mid, high);
+/* value of left part > pivot
+   value of right part < pivot */
+static void partition(int k, int *arr, int start, int end)
+{
+    if (start >= end || k < 1)
+        return;
+
+    int i, l, m, r, pivot;
+
+    pivot = arr[start];
+    l = start + 1;
+    r = end - 1;
+    for (i = l; i <= r; i++) {
+        if (arr[i] > pivot)
+            swap(&arr[l++], &arr[i]);
+        else if (arr[i] < pivot)
+            swap(&arr[r--], &arr[i--]);
     }
+    swap(&arr[start], &arr[l - 1]);
+
+    if (l <= k && k <= r + 1)
+        return;
+
+    if (l > k)
+        return partition(k, arr, start, l);
+    
+    return partition(k, arr, r + 1, end);
 }
 
-// Function to calculate max sum
-long long maxSum(int** grid, int gridSize, int* gridColSize, int* limits, int limitsSize, int k) {
-    int i, j, count = 0;
-    long long sum = 0;
+long long maxSum(int** grid, int gridSize, int* gridColSize, int* limits, int limitsSize, int k)
+{
+    int *candidates;
+    int i, r, c, col_size, cand_size;
+    long long res;
 
-    // Allocate an array to store selected elements
-    int *selected = (int *)malloc(gridSize * (*gridColSize) * sizeof(int));
+    cand_size = 0;
+    for (r = 0; r < limitsSize; r++)
+        cand_size += limits[r];
+    candidates = malloc(cand_size * sizeof(int));
 
-    // Extract top 'limits[i]' elements from each row
-    for (i = 0; i < gridSize; i++) {
-        mergeSort(grid[i], 0, gridColSize[i] - 1); // Sort row in descending order
-        for (j = 0; j < limits[i] && j < gridColSize[i]; j++) {
-            selected[count++] = grid[i][j];
-        }
+    col_size = *gridColSize;
+    i = 0;
+    for (r = 0; r < gridSize; r++) {
+        partition(limits[r], grid[r], 0, col_size);
+
+        for (c = 0; c < limits[r]; c++)
+            candidates[i++] = grid[r][c];
     }
 
-    // Sort selected elements in descending order
-    mergeSort(selected, 0, count - 1);
+    partition(k, candidates, 0, i);
+    res = 0LL;
+    for (i = 0; i < k; i++)
+        res += candidates[i];
 
-    // Sum up to k largest elements
-    for (i = 0; i < k && i < count; i++) {
-        sum += selected[i];
-    }
-
-    free(selected);
-    return sum;
+    free(candidates);
+    return res;
 }
