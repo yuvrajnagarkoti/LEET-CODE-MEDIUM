@@ -12,13 +12,11 @@ int* sortArray(int* nums, int n, int* returnSize)
     // Adjust size to handle negative numbers
     int range = max - min + 1;
     // Allocate and initialize count array
-    int* count = (int*)calloc(range, sizeof(int));
-    
+    int* count = (int*)calloc(range, sizeof(int)); 
     // Fill count array
     for (i = 0; i < n; i++) {
         count[nums[i] - min]++;
     }
-
     // Reconstruct sorted array
     j = 0;
     for (i = 0; i < range; i++)
