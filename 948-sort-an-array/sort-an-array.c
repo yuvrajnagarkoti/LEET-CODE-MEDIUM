@@ -1,4 +1,5 @@
-int* sortArray(int* nums, int n, int* returnSize) {
+int* sortArray(int* nums, int n, int* returnSize)
+{
     int i, j;
     // Find min and max values
     int min = nums[0], max = nums[0];
@@ -8,7 +9,6 @@ int* sortArray(int* nums, int n, int* returnSize) {
         if (nums[i] < min)
             min = nums[i];
     }
-
     // Adjust size to handle negative numbers
     int range = max - min + 1;
     // Allocate and initialize count array
