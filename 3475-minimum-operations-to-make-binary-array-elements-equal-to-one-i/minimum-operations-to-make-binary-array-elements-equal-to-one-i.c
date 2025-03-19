@@ -1,21 +1,25 @@
-int minOperations(int* nums, int n)
+int minOperations(int* arr, int n)
 {
-    int i;
     int count=0;
-    for (int i = 0; i < n-2; i++)
-    {
-        if (nums[i] == 0)
-        {
-            // Flip this triplet (i, i+1, i+2)
-            nums[i] ^= 1;
-            nums[i + 1] ^= 1;
-            nums[i + 2] ^= 1;
+    for(int i=0;i<n-2;i++){
+        if(arr[i]==0){
+            if(arr[i+1]==0){
+                arr[i+1]=1;
+            }
+            else{
+                arr[i+1]=0;
+            }
+            if(arr[i+2]==0){
+                arr[i+2]=1;
+            }
+            else{
+                arr[i+2]=0;
+            }
             count++;
         }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (nums[i] == 0) return -1;
-    }
+    } 
+    if(arr[n-1]==0||arr[n-2]==0){
+        return -1;
+    }  
     return count;
 }
