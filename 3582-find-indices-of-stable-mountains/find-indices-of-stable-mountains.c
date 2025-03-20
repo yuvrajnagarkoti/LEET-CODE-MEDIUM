@@ -1,6 +1,3 @@
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
 int* stableMountains(int* height, int n, int threshold, int* returnSize)
 {
     int * a= (int *)calloc(100,sizeof(int ));
