@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-int* searchRange(int* nums, int n, int target, int* returnSize) {
+int* searchRange(int* nums, int n, int target, int* returnSize)
+{
     int *a = (int *)malloc(2 * sizeof(int));
     a[0] = -1;
     a[1] = -1;
