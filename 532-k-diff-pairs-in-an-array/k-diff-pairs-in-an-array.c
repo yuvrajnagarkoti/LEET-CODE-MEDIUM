@@ -1,26 +1,26 @@
-// Function to compare two elements for qsort
-int compare(const void *a, const void *b) {
-    return (*(int *)a - *(int *)b);
+int compare(const void* a, const void* b) 
+{
+    return (*(int*)a - *(int*)b); // Sorting function
 }
 
-// Function to count unique pairs with difference k
-int findPairs(int *nums, int n, int k)
+int findPairs(int* nums, int numsSize, int k) 
 {
-    qsort(nums, n, sizeof(int), compare); // Sort the array
-    int count = 0;
-    int i = 0, j = 1;
-    while (j < n) {
-        if (i == j || nums[j] - nums[i] < k) {
-            j++;
-        } 
-        else if (nums[j] - nums[i] > k) {
-            i++;
-        } 
-        else {
+    if (k < 0) return 0; // No valid pairs if k is negative
+    qsort(nums, numsSize, sizeof(int), compare); // Sort the array
+    int left = 0, right = 1, count = 0;
+    while (left < numsSize) 
+    {
+        while (right < numsSize && (nums[right] - nums[left] < k || left == right)) 
+            right++;
+        // Check if we found a valid pair
+        if (right < numsSize && nums[right] - nums[left] == k) 
+        {
             count++;
-            i++; j++;
-            while (j < n && nums[j] == nums[j - 1]) j++;
         }
+        // Move left to the next unique number to ensure uniqueness
+        int current = nums[left];
+        while (left < numsSize && nums[left] == current) 
+            left++;
     }
     return count;
 }
