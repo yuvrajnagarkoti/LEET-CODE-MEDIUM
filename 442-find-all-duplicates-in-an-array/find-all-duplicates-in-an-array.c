@@ -10,9 +10,7 @@ int* findDuplicates(int* nums, int n, int* returnSize)
     for (int i = 1; i <= n; i++)
     {
         if (count[i] > 1)
-        {
             arr[k++] = i;
-        }
     }
     free(count);
     *returnSize = k;
