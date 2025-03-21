@@ -1,7 +1,7 @@
 int* findDuplicates(int* nums, int n, int* returnSize)
 {
-    int *count = (int *)calloc(n + 1, sizeof(int)); // Allocate and initialize counting array
-    int *arr = (int *)malloc(n * sizeof(int)); // Allocate memory for duplicates
+    int *count = (int *)calloc(n + 1, sizeof(int));
+    int *arr = (int *)malloc(n * sizeof(int));
     int k = 0;
     for (int i = 0; i < n; i++)
     {
@@ -14,7 +14,7 @@ int* findDuplicates(int* nums, int n, int* returnSize)
             arr[k++] = i;
         }
     }
-    free(count); // Free the count array
+    free(count);
     *returnSize = k;
     return arr;
 }
