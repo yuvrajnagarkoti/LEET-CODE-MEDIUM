@@ -2,22 +2,20 @@ class Solution {
 public:
     int subarraySum(vector<int>& nums, int k)
     {
-        int i,j,sum,count=0;
-        for(i=0;i<nums.size();i++)
+        unordered_map<int, int> prefixSumCount;
+        int prefixSum = 0, count = 0;
+        // Base case: prefix sum of 0 occurs once
+        prefixSumCount[0] = 1;
+        for (int num : nums)
         {
-            sum=nums[i];
-            if(sum == k)
+            prefixSum += num;
+            // Check if (prefixSum - k) exists in the map
+            if (prefixSumCount.find(prefixSum - k) != prefixSumCount.end())
             {
-                count++;
+                count += prefixSumCount[prefixSum - k];
             }
-            for(j=i+1;j<nums.size();j++)
-            {
-                sum=sum+nums[j];
-                if(sum == k)
-                {
-                    count++;
-                }
-            }
+            // Store/update prefix sum count in map
+            prefixSumCount[prefixSum]++;
         }
         return count;
     }
