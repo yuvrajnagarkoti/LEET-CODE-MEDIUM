@@ -7,20 +7,20 @@ public:
         while (low <= high)
         {
             int mid = low + (high - low) / 2;
-            
             // If mid element is the target
             if (nums[mid] == target) 
                 return mid;
-
             // Check if the left half is sorted
-            if (nums[low] <= nums[mid]) {
+            if (nums[low] <= nums[mid])
+            {
                 if (target >= nums[low] && target < nums[mid]) 
                     high = mid - 1;  // Search in the left half
                 else 
                     low = mid + 1;   // Search in the right half
             } 
             // Right half is sorted
-            else {
+            else
+            {
                 if (target > nums[mid] && target <= nums[high]) 
                     low = mid + 1;   // Search in the right half
                 else 
