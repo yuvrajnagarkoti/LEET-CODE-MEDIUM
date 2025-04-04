@@ -1,26 +1,50 @@
-
 class Solution {
-private:
-    int lower_bound(vector<int>& nums, int low, int high, int target){
-        while(low <= high){
-            int mid = (low + high) >> 1;
-            if(nums[mid] < target){
-                low = mid + 1;
-            }
-            else{
+public:
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        vector<int> ans = {-1, -1};
+        int low = 0;
+        int high = nums.size() - 1;
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            if(nums[mid] == target)
+            {
+                ans[0] = mid;
+                ans[1] = mid;
                 high = mid - 1;
             }
+            else if(nums[mid] > target)
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
         }
-        return low;
-    }
-public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        int low = 0, high = nums.size()-1;
-        int startingPosition = lower_bound(nums, low, high, target);
-        int endingPosition = lower_bound(nums, low, high, target + 1) - 1;
-        if(startingPosition < nums.size() && nums[startingPosition] == target){
-            return {startingPosition, endingPosition};
+        if(ans[0] == -1)
+        {
+            return ans;
         }
-        return {-1, -1};
+        low = ans[0] + 1;
+        high = nums.size() - 1;
+        while(low <= high)
+        {
+            int mid = low + (high - low) / 2;
+            if(nums[mid] == target)
+            {
+                ans[1] = mid;
+                low = mid + 1;
+            }
+            else if(nums[mid] > target)
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
+        return ans;
     }
 };
