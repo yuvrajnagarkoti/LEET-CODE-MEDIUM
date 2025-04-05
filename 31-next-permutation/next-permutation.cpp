@@ -4,13 +4,16 @@ public:
     {
         int n = nums.size(), i = n - 2;
         // Find first index from the end where nums[i] < nums[i+1]
-        while (i >= 0 && nums[i] >= nums[i + 1]) {
+        while (i >= 0 && nums[i] >= nums[i + 1])
+        {
             i--;
         }
-        if (i >= 0) {
+        if (i >= 0)
+        {
             int j = n - 1;
             // Find the next greater element from the end
-            while (nums[j] <= nums[i]) {
+            while (nums[j] <= nums[i])
+            {
                 j--;
             }
             swap(nums[i], nums[j]);
