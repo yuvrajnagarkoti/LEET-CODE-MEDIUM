@@ -1,22 +1,23 @@
-class Solution
-{
+class Solution {
 public:
-    typedef pair<char, int> P;
     string frequencySort(string s)
     {
-        vector<P> vec(123);
-        for(char &ch : s) {
-            int freq = vec[ch].second;
-            vec[ch] = {ch, freq+1};
+        // Step 1: Count frequency of each character
+        unordered_map<char, int> freq;
+        for (char c : s) {
+            freq[c]++;
         }
-        auto comp = [&](P &p1, P &p2) {
-            return p1.second > p2.second;
-        };
-        sort(begin(vec), end(vec), comp);
-        string result = "";
-        for(int i = 0; i <= 122; i++)
+        // Step 2: Put characters and their frequency into a vector
+        vector<pair<char, int>> vec(freq.begin(), freq.end());
+        // Step 3: Sort the vector by frequency (descending)
+        sort(vec.begin(), vec.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+            return a.second > b.second;
+        });
+        // Step 4: Build the result string
+        string result;
+        for (auto& p : vec)
         {
-            result += string(vec[i].second, vec[i].first);
+            result.append(p.second, p.first);
         }
         return result;
     }
