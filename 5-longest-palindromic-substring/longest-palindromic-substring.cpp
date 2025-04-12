@@ -1,32 +1,32 @@
 class Solution
 {
 public:
-    int palincheck(string s,int low,int high)
+    void expandAroundCenter(const string &s, int left, int right, int &start, int &maxLen)
     {
-        int i=low,j=high;
-        while(i<j)
+        while (left >= 0 && right < s.size() && s[left] == s[right])
         {
-            if(s[i++] != s[j--])
+            int len = right - left + 1;
+            if (len > maxLen)
             {
-                return 0;
+                maxLen = len;
+                start = left;
             }
+            --left;
+            ++right;
         }
-        return high-low+1;
     }
     string longestPalindrome(string s)
     {
-        int i,j;
-        string ans;
-        if(s.length() == 1) return s;
-        for(i=0;i<s.length();i++)
+        int n = s.length();
+        if (n <= 1) return s;
+        int start = 0, maxLen = 1;
+        for (int i = 0; i < n; ++i)
         {
-            for(j=i;j<s.length();j++)
-            {
-                if(s[i] != s[j]) continue;
-                if(ans.length() < palincheck(s,i,j))
-                    ans=s.substr(i,j-i+1);
-            }
+            // Odd length palindrome
+            expandAroundCenter(s, i, i, start, maxLen);
+            // Even length palindrome
+            expandAroundCenter(s, i, i + 1, start, maxLen);
         }
-        return ans;
+        return s.substr(start, maxLen);
     }
 };
