@@ -5,7 +5,7 @@ public:
     {
     vector<vector<int>> ans;
     sort(nums.begin(), nums.end());
-    int i, j, k;
+    int i;
     int low,high;
     for (i = 0; i < nums.size() - 2; i++)
     {
