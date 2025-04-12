@@ -15,7 +15,7 @@ class Solution
             }
             else if(numbers[low] + numbers[high] < target)
                 low++;
-            else if(numbers[low] + numbers[high] > target)
+            else
                 high--;
         }
         return ans;
