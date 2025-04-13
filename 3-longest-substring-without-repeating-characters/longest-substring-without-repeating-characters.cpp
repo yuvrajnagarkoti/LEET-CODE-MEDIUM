@@ -15,7 +15,6 @@ public:
             lastSeen[current] = end;
             maxLength = max(maxLength, end - start + 1);
         }
-
         return maxLength;
     }
 };
