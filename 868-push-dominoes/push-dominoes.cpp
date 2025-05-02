@@ -2,37 +2,52 @@ class Solution {
 public:
     string pushDominoes(string dominoes)
     {
-        int n = dominoes.size();
-        string ans = dominoes;
-        vector<int> force(n, 0);
-        int f = 0;
-
-        // Left to right
-        for (int i = 0; i < n; ++i)
+        int prev=-1,i=0;
+        while(i<dominoes.size())
         {
-            if (dominoes[i] == 'R') f = n;
-            else if (dominoes[i] == 'L') f = 0;
-            else f = max(f - 1, 0);
-            force[i] += f;
+            if(dominoes[i]!='.')
+            {
+                prev=i;
+                i++;
+                continue;
+            }
+            int cur=i;
+            while(i<dominoes.size()&&dominoes[i]=='.') i++;
+            if(prev==-1||dominoes[prev]=='L')
+            {
+                if(i<dominoes.size()&&dominoes[i]=='L')
+                {
+                    while(cur<i)
+                    {
+                        dominoes[cur]='L';
+                        cur++;
+                    }
+                }
+            }
+            else
+            {
+                if(i>=dominoes.size()||dominoes[i]=='R')
+                {
+                    while(cur<i)
+                    {
+                        dominoes[cur]='R';
+                        cur++;
+                    }
+                }
+                else
+                {
+                    while(cur<i)
+                    {
+                        int val1=cur-prev,val2=i-cur;
+                        if(val1<val2) dominoes[cur]=dominoes[prev];
+                        else if(val1>val2) dominoes[cur]=dominoes[i];
+                        cur++;
+                    }
+                }    
+            }
+            prev=i;
+            i++;
         }
-
-        f = 0;
-        // Right to left
-        for (int i = n - 1; i >= 0; --i)
-        {
-            if (dominoes[i] == 'L') f = n;
-            else if (dominoes[i] == 'R') f = 0;
-            else f = max(f - 1, 0);
-            force[i] -= f;
-        }
-        
-        for (int i = 0; i < n; ++i)
-        {
-            if (force[i] > 0) ans[i] = 'R';
-            else if (force[i] < 0) ans[i] = 'L';
-            else ans[i] = '.';
-        }
-
-        return ans;
+        return dominoes;
     }
 };
