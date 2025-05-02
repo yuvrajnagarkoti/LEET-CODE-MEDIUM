@@ -1,38 +1,34 @@
 class Solution {
 public:
-    string pushDominoes(string dominoes)
-    {
+    string pushDominoes(string dominoes) {
         int n = dominoes.size();
-        vector<int> forces(n, 0);
-
-        // Left to right pass (apply rightward forces)
-        int force = 0;
-        for (int i = 0; i < n; ++i)
-        {
-            if (dominoes[i] == 'R') force = n;
-            else if (dominoes[i] == 'L') force = 0;
-            else force = max(force - 1, 0);
-            forces[i] += force;
+        string ans = dominoes;
+        vector<int> force(n, 0);
+        
+        int f = 0;
+        // Left to right
+        for (int i = 0; i < n; ++i) {
+            if (dominoes[i] == 'R') f = n;
+            else if (dominoes[i] == 'L') f = 0;
+            else f = max(f - 1, 0);
+            force[i] += f;
         }
 
-        // Right to left pass (apply leftward forces)
-        force = 0;
-        for (int i = n - 1; i >= 0; --i)
-        {
-            if (dominoes[i] == 'L') force = n;
-            else if (dominoes[i] == 'R') force = 0;
-            else force = max(force - 1, 0);
-            forces[i] -= force;
+        f = 0;
+        // Right to left
+        for (int i = n - 1; i >= 0; --i) {
+            if (dominoes[i] == 'L') f = n;
+            else if (dominoes[i] == 'R') f = 0;
+            else f = max(f - 1, 0);
+            force[i] -= f;
         }
 
-        // Build final state
-        string result;
-        for (int f : forces)
-        {
-            if (f > 0) result += 'R';
-            else if (f < 0) result += 'L';
-            else result += '.';
+        for (int i = 0; i < n; ++i) {
+            if (force[i] > 0) ans[i] = 'R';
+            else if (force[i] < 0) ans[i] = 'L';
+            else ans[i] = '.';
         }
-        return result;
+
+        return ans;
     }
 };
