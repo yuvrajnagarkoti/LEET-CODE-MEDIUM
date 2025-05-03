@@ -1,29 +1,23 @@
-class Solution {
+class Solution
+{
 public:
     string customSortString(string order, string s)
     {
-        vector <int> count(26,0);
-        string ans;
-        for(int i=0 ; i<s.length();i++)
+        vector<int> count(26, 0);
+        for (char c : s)
         {
-            count[s[i]-'a']++;
+            count[c - 'a']++;
         }
-        for(int i=0 ; i<order.length() ; i++)
+        string res;
+        for (char c : order)
         {
-            while(count[order[i]-'a'] != 0)
-            {
-                ans = ans + order[i];
-                count[order[i] - 'a']--;
-            }
+            res.append(count[c - 'a'], c);
+            count[c - 'a'] = 0;
         }
-        for(int i=0 ; i<26 ; i++)
+        for (int i = 0; i < 26; ++i)
         {
-            while(count[i] != 0)
-            {
-                ans = ans + char(i+'a');
-                count[i]--;
-            }
+            res.append(count[i], 'a' + i);
         }
-        return ans;
+        return res;
     }
 };
