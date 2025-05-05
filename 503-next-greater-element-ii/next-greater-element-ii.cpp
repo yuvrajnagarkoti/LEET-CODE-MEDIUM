@@ -1,23 +1,29 @@
 class Solution
 {
+    
+private:
+    int search(vector<int>& nums, int index)
+    {
+        int n = nums.size();
+        int curr = nums[index];
+        for (int i = 1; i < n; i++)
+        {
+            int nextIndex = (index + i) % n;
+            if (nums[nextIndex] > curr)
+            {
+                return nums[nextIndex];
+            }
+        }
+        return -1;
+    }
 public:
     vector<int> nextGreaterElements(vector<int>& nums)
     {
         int n = nums.size();
-        vector<int> ans(n, -1);
-        stack<int> st;
-        for (int i = 2 * n - 1; i >= 0; i--)
+        vector<int> ans;
+        for (int i = 0; i < n; i++)
         {
-            int index = i % n;
-            while (!st.empty() && nums[st.top()] <= nums[index])
-            {
-                st.pop();
-            }
-            if (!st.empty())
-            {
-                ans[index] = nums[st.top()];
-            }
-            st.push(index);
+            ans.push_back(search(nums, i));
         }
         return ans;
     }
