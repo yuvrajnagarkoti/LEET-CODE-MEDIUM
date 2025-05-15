@@ -2,7 +2,7 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums)
     {
-        map <int,int> count;
+        unordered_map <int,int> count;
         for(int it : nums)
         {
             count[it]++;
