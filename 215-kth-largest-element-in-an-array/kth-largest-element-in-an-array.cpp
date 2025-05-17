@@ -10,13 +10,11 @@ public:
             if(max < nums[i])
                 max=nums[i];
         }
-        vector <int> count(max-min+1 ,0);
-
+        vector <int> count(max-min+1 ,0);      
         for (int num : nums)
         {
             count[num-min]++;
         }
-
         int remaining = k;
         for (int i = count.size()-1 ; i>=0 ; i--)
         {
