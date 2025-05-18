@@ -8,32 +8,34 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution {
-public:
-    int gcd(int n1,int n2)
+class Solution
+{
+    int gcd(int a, int b)
     {
-        int ans =1;
-        int m= min(n1,n2);
-        for(int i=2; i<=m ;i++)
+        if(b == 0)
         {
-            if(n1%i == 0 && n2%i == 0)
-            {
-                ans=i;
-            }
+            return a;
         }
-        return ans;
+        return gcd(b,a%b);
     }
-
+public:
     ListNode* insertGreatestCommonDivisors(ListNode* head)
     {
-        ListNode*temp = head;
-        while(temp->next != NULL )
+        if(!head and !head->next)
         {
-            int g =  gcd(temp->val , temp->next->val);
-            ListNode* a = new ListNode(g);  
-            a->next = temp->next;
-            temp->next = a;
-            temp=temp->next->next;
+            return head;
+        }
+        ListNode* prev = head;
+        ListNode* curr = head->next;
+        while(curr)
+        {
+            int res = gcd(prev->val,curr->val);
+            ListNode* node = new ListNode(res);
+            ListNode *temp = curr->next;
+            prev->next = node;
+            node->next = curr;
+            prev = curr;
+            curr = curr->next;
         }
         return head;
     }
