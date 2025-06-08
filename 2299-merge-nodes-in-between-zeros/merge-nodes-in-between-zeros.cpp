@@ -33,7 +33,7 @@ public:
             }
             curr = curr->next;
         }
-        lastValid->next = nullptr;  // Trim list after last valid node
+        lastValid->next = nullptr;
         return head;
     }
 };
