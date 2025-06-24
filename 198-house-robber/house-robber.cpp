@@ -5,8 +5,6 @@ public:
     {
         int i,j,n=nums.size();
         if(n==1)    return nums[0];
-        if(n==2)    return max(nums[0],nums[1]);
-        if(n==3)    return max( max(nums[0],nums[1]) , max(nums[2],nums[0]+nums[2]) );
         vector<int> sum(n,0);
         sum[0] = nums[0];
         for(i=1;i<n;i++)
