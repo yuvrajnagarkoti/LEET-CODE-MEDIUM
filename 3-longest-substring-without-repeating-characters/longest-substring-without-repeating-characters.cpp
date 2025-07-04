@@ -1,32 +1,31 @@
-class Solution
-{
+class Solution {
 public:
     int lengthOfLongestSubstring(string s)
     {
-        if (s.length() == 0) return 0;
+        int len = s.length();
+        int l=0;
+        vector<bool> seen(256, false);
 
-        int low = 0, high = 0, n = s.length();
-        int max_len = 0;
-        map<char, int> mpp;
-
-        while (high < n)
+        int ans = 0;
+        for(int r=0; r<len; r++)
         {
-            char ch = s[high];
-
-            // If duplicate found, shrink window from left
-            if (mpp.find(ch) != mpp.end())
+            if(seen[s[r]] == false)
             {
-                mpp.erase(s[low]);
-                low++;
+                seen[s[r]] = true;
             }
-
             else
             {
-                mpp[ch] = 1;
-                max_len = max(max_len, high - low + 1);
-                high++;
+                while(s[l] != s[r])
+                {
+                    seen[s[l]] = false;
+                    l++;
+                }
+                l++;
+                if(l>=len) break;
             }
+            ans = max(ans, r-l+1);
         }
-        return max_len;
+
+        return ans;
     }
 };
