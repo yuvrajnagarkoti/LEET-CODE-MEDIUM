@@ -3,31 +3,30 @@ class Solution
 public:
     int lengthOfLongestSubstring(string s)
     {
-        int low=0,high=0,n=s.length();
-        int m=0,c=0;
-        map <char,int> mpp;
-        while(low < n && high < n)
+        if (s.length() == 0) return 0;
+
+        int low = 0, high = 0, n = s.length();
+        int max_len = 0;
+        map<char, int> mpp;
+
+        while (high < n)
         {
-            int ch = s[high];
-            if( mpp.find(ch) == mpp.end() )
+            char ch = s[high];
+
+            // If duplicate found, shrink window from left
+            if (mpp.find(ch) != mpp.end())
             {
-                c++;
-                mpp[ch]++;
-                high++;
-                if( m < c)
-                {
-                    m = c;
-                }
+                mpp.erase(s[low]);
+                low++;
             }
+
             else
             {
-                mpp.clear();
-                c=0;
-                low++;
-                high=low;
+                mpp[ch] = 1;
+                max_len = max(max_len, high - low + 1);
+                high++;
             }
         }
-
-        return m;
+        return max_len;
     }
 };
