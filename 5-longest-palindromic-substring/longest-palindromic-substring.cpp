@@ -1,32 +1,38 @@
 class Solution
 {
 public:
-    void expandAroundCenter(const string &s, int left, int right, int &start, int &maxLen)
+    static bool checkpalin(const string &s, int i, int j)
     {
-        while (left >= 0 && right < s.size() && s[left] == s[right])
+        while (i < j)
         {
-            int len = right - left + 1;
-            if (len > maxLen)
+            if (s[i] != s[j])
             {
-                maxLen = len;
-                start = left;
+                return false;
             }
-            --left;
-            ++right;
+            i++;
+            j--;
         }
+        return true;
     }
+
     string longestPalindrome(string s)
     {
         int n = s.length();
-        if (n <= 1) return s;
-        int start = 0, maxLen = 1;
-        for (int i = 0; i < n; ++i)
+        int max_len = 0;
+        string ans = "";
+
+        for (int i = 0; i < n; i++)
         {
-            // Odd length palindrome
-            expandAroundCenter(s, i, i, start, maxLen);
-            // Even length palindrome
-            expandAroundCenter(s, i, i + 1, start, maxLen);
+            for (int j = n - 1; j >= i; j--)
+            {
+                if (s[i] == s[j] && (j - i + 1) > max_len && checkpalin(s, i, j))
+                {
+                    ans = s.substr(i, j - i + 1);
+                    max_len = j - i + 1;
+                    break;  // No need to check smaller substrings for this i
+                }
+            }
         }
-        return s.substr(start, maxLen);
+        return ans;
     }
 };
