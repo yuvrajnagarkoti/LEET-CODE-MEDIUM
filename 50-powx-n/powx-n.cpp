@@ -1,23 +1,24 @@
-class Solution {
-    private:
-        double power(double x, long n)
+class Solution
+{
+public:
+    double myPow(double x, int n)
+    {
+        long long power = n;  // Use long long to prevent overflow
+        if (power < 0)
         {
-            if(n == 0) return 1.0;
-            if(n==1) return x;
-            if(n %2 == 0)
-            {
-                return power(x * x , n/2);
-            }
-            return x * power(x , n-1);
+            x = 1 / x;
+            power = -power;
         }
-    public:
-        double myPow(double x, int n) 
+        double result = 1;
+        while (power)
         {
-            long num = n;
-            if(n < 0)
+            if (power % 2 == 1)
             {
-                return (1.0 / power(x , -1 * num));
+                result *= x;
             }
-            return power(x,num);
+            x *= x;
+            power /= 2;
         }
+        return result;
+    }
 };
