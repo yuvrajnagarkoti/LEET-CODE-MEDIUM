@@ -1,22 +1,25 @@
-class Solution {
+class Solution 
+{
 public:
+
+    double helper(double x,int n)
+    {
+        if(n==0)    return 1;
+        if(x==0)    return 0;
+        double res = helper(x,n/2);
+        res = res*res;
+        if(n%2 != 0)
+            res = res*x;
+        return res;
+    }
+
     double myPow(double x, int n)
     {
-        if(n == 0)
-            return 1;
-        if(n == 1)
-            return x; 
-        if(n == -1)
-            return 1/x;
-        double halfPower = myPow(x,n/2);
-        double result = halfPower * halfPower;
-        if(n%2 != 0)
+        double res = helper(x,n);
+        if( n < 0)
         {
-            if(n > 0)
-                result = result * x;
-            else
-                result = result / x;
+            res = 1/res;
         }
-        return result;
+        return res;
     }
 };
