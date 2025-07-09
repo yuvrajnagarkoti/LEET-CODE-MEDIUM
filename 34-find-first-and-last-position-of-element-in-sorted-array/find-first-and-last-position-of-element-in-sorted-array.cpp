@@ -8,7 +8,7 @@ public:
         {
             if( nums[i] == target && nums[j] == target)
             {
-                return {i,j};
+                return {i,j}; //found
             }
             else if( nums[i] == target)
             {
@@ -24,6 +24,6 @@ public:
                 j--;
             }
         }
-        return {-1,-1};
+        return {-1,-1}; //not found
     }
 };
