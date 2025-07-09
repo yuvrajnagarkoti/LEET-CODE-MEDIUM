@@ -4,7 +4,6 @@ public:
     {
         sort(players.begin(),players.end());
         sort(trainers.begin(),trainers.end());
-
         int i=0,j=0;
         int count=0;
         while( i<players.size() && j<trainers.size())
@@ -20,7 +19,6 @@ public:
                 j++;
             }
         }
-
         return count;
     }
 };
