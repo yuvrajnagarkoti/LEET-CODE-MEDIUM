@@ -28,12 +28,26 @@ class Solution
                 ans.push_back(curr);
             return;
         }
-        curr.push_back('(');
-        solve(curr,n);
-        curr.pop_back();
-        curr.push_back(')');
-        solve(curr,n);
-        curr.pop_back();
+        int open=0,close=0;
+        for(int i=0;i<curr.length();i++)
+        {
+            if(curr[i] == '(')
+                open++;
+            else
+                close++;
+        }
+        if( open <= n)
+        {
+            curr.push_back('(');
+            solve(curr,n);
+            curr.pop_back();
+        }
+        if( close < open)
+        {
+            curr.push_back(')');
+            solve(curr,n);
+            curr.pop_back();
+        }
     }
 
     vector<string> generateParenthesis(int n)
