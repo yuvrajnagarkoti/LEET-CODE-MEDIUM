@@ -11,31 +11,23 @@ class Solution
     public:
     ListNode *detectCycle(ListNode *head)
     {
-        if(head == NULL)    return head;
-        ListNode *slow = head;
-        ListNode *fast = head;
-        int flag=0;
-        while ( fast != NULL && fast->next != NULL )
+        ListNode* slow = head;  
+        ListNode* fast = head;  
+        while (fast != NULL && fast->next != NULL)
         {
-            slow=slow->next;
-            fast=fast->next->next;
-            if( slow == fast )
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
             {
-                flag=1;
-                break;
-            }   
-        }
-        if( flag==1)
-        {
-            ListNode *pos = head;
-            while( pos != slow)
-            {
-                pos=pos->next;
-                slow=slow->next;
+                slow = head; 
+                while (slow != fast)
+                {
+                    slow = slow->next;  
+                    fast = fast->next;  
+                }
+                return slow;  
             }
-            return slow;
         }
-        return NULL;
+    return NULL; 
     }
-
 };
