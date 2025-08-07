@@ -16,7 +16,7 @@ public:
             }
             if( n1[low]==nums[low] )
                 low++;
-            if( low <= high && n1[high]==nums[high] )
+            else if(n1[high]==nums[high] )
                 high--;
         }
         return high-low+1;
