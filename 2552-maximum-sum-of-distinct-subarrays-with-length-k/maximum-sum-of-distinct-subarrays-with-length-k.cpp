@@ -3,31 +3,23 @@ class Solution
     public:
     long long maximumSubarraySum(vector<int>& nums, int k)
     {
-        int n = nums.size();
-        unordered_map<int, int> freq;
-        long long sum = 0, ans = 0;
-        int left = 0, right = 0;
-        while (right < n)
+        long long sum=0,ans=0;
+        int left,right,n=nums.size();
+        set <int> s;
+        left=0;
+        for(int right=0;right<n;right++)
         {
-            freq[nums[right]]++;
-            sum += nums[right];
-            // If duplicate found, shrink window from left
-            while (freq[nums[right]] > 1)
+            while( s.find(nums[right])!=s.end() || s.size()==k)
             {
-                freq[nums[left]]--;
-                sum -= nums[left];
-                left++;
+                s.erase(nums[left]);
+                sum-=nums[left++];
             }
-            // If window size is exactly k
-            if (right - left + 1 == k)
+            s.insert(nums[right]);
+            sum+=nums[right];
+            if( s.size() == k)
             {
-                ans = max(ans, sum);
-                // Shrink window to maintain size k
-                freq[nums[left]]--;
-                sum -= nums[left];
-                left++;
+                ans=max(sum,ans);
             }
-            right++;
         }
         return ans;
     }
