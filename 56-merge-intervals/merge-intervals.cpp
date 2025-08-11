@@ -12,9 +12,9 @@ class Solution
             {
                 intervals[i-1][1] = max(intervals[i-1][1],intervals[i][1]);
                 intervals.erase(intervals.begin()+i);
-                i--;
             }
-            i++;
+            else
+                i++;
         }
         return intervals;
     }
