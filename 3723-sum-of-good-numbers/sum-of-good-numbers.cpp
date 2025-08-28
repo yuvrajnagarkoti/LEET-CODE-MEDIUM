@@ -6,9 +6,7 @@ public:
         for(int i=0;i<nums.size();i++)
         {
             int flag=1;
-            if( (i-k >=0) && !(nums[i]>nums[i-k]) )
-                flag=0;
-            if ( (i+k <nums.size()) && !(nums[i]>nums[i+k]) )
+            if ( ((i-k >=0)&&!(nums[i]>nums[i-k])) || ((i+k<nums.size())&&!(nums[i]>nums[i+k])) )
                 flag=0;
             if(flag)
                 sum+=nums[i];
