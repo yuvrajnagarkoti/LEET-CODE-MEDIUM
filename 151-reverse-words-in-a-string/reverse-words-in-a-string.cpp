@@ -21,12 +21,12 @@ public:
                 i=j;
             }
         }
-        string s1="";
+        s="";
         for(i=ans.size()-1;i>0;i--)
         {
-            s1+= ans[i]+" ";
+            s+= ans[i]+" ";
         }
-        s1+=ans[i];
-        return s1;
+        s+=ans[i];
+        return s;
     }
 };
