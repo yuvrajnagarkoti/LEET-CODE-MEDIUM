@@ -14,7 +14,8 @@ public:
             if (i >= n) break;
 
             int j = i;
-            while (j < n && s[j] != ' ') j++;
+            while (j < n && s[j] != ' ')
+                j++;
 
             string temp = s.substr(i, j - i);
             reverse(temp.begin(), temp.end());
