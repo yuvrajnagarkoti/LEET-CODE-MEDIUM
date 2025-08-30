@@ -2,20 +2,15 @@ class Solution {
 public:
     int hIndex(vector<int>& citations)
     {
-        int ans=0;
-        for(int k=0;k<1001;k++)
+        sort(citations.begin(), citations.end(), greater<int>());
+        int h = 0;
+        for (int i = 0; i < citations.size(); i++)
         {
-            int count=0;
-            for(int i=0;i<citations.size();i++)
-            {
-                if(citations[i] >= k)
-                    count++;
-            }
-            if(count >= k)
-                ans=k;
+            if (citations[i] >= i + 1)
+                h = i + 1;
             else
                 break;
         }
-        return ans;
+        return h;
     }
 };
