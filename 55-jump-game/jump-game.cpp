@@ -11,6 +11,6 @@ public:
                 return false;
             reach = max(nums[i]+i,reach);
         }
-        return reach>=nums.size()-1;
+        return true;
     }
 };
