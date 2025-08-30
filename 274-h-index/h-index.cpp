@@ -9,14 +9,10 @@ public:
             for(int i=0;i<citations.size();i++)
             {
                 if(citations[i] >= k)
-                {
                     count++;
-                }
             }
             if(count >= k)
-            {
                 ans=k;
-            }
             else
                 break;
         }
