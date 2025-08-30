@@ -8,32 +8,30 @@ class Solution
 
     bool isValidSudoku(vector<vector<char>>& board)
     {
-        for(int i=0;i<9;i++)
+        for(int i = 0; i < 9; i++)
         {
-            vector<int> count(9,0);
-            for(int j=0;j<9;j++)
+            vector<int> rowCount(9, 0);
+            vector<int> colCount(9, 0);
+
+            for(int j = 0; j < 9; j++)
             {
-                if(board[i][j] == '.') continue;
-                int temp = ctoi(board[i][j])-1;
-                if(count[temp] != 0)
-                    return false;
-                count[temp]++;
+                // Check row
+                if(board[i][j] != '.')
+                {
+                    int temp = ctoi(board[i][j]) - 1;
+                    if(rowCount[temp] != 0) return false;
+                    rowCount[temp]++;
+                }
+                // Check column
+                if(board[j][i] != '.')
+                {
+                    int temp = ctoi(board[j][i]) - 1;
+                    if(colCount[temp] != 0) return false;
+                    colCount[temp]++;
+                }
             }
         }
-
-        for(int i=0;i<9;i++)
-        {
-            vector<int> count(9,0);
-            for(int j=0;j<9;j++)
-            {
-                if(board[j][i] == '.') continue;
-                int temp = ctoi(board[j][i])-1;
-                if(count[temp] != 0)
-                    return false;
-                count[temp]++;
-            }
-        }
-
+        
         for(int i=0;i<9;i=i+3)
         {
             for(int j=0;j<9;j=j+3)
