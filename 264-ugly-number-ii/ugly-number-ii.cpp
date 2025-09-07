@@ -11,15 +11,18 @@ public:
         {
             int next = min({next2, next3, next5});
             ugly[i] = next;
-            if (next == next2) {
+            if (next == next2)
+            {
                 i2++;
                 next2 = ugly[i2] * 2;
             }
-            if (next == next3) {
+            if (next == next3)
+            {
                 i3++;
                 next3 = ugly[i3] * 3;
             }
-            if (next == next5) {
+            if (next == next5)
+            {
                 i5++;
                 next5 = ugly[i5] * 5;
             }
