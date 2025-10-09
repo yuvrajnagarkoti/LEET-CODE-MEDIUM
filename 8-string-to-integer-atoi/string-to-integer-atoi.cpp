@@ -1,38 +1,29 @@
-class Solution
-{
+class Solution {
 public:
     int myAtoi(string s)
     {
-        int i = 0, flag = 1;
-        long sum = 0;
-        while (i < s.length() && s[i] == ' ')
+        int i = 0, sign = 1;
+        long num = 0;
+
+        while (i < s.size() && s[i] == ' ')
             i++;
 
-        // Handle optional '+' or '-'
-        if (i < s.length())
-        {
-            if (s[i] == '-')
-            {
-                flag = -1;
+        if (i < s.size()) {
+            if (s[i] == '-') {
+                sign = -1;
                 i++;
-            }
-            else if (s[i] == '+')
-            {
+            } else if (s[i] == '+') {
                 i++;
             }
         }
 
-        // Read digits with overflow check
-        while (i < s.length() && s[i] >= '0' && s[i] <= '9')
+        while (i < s.size() && isdigit(s[i]))
         {
-            int digit = s[i] - '0';
-            if (sum > (INT_MAX - digit) / 10)
-            {
-                return (flag == 1) ? INT_MAX : INT_MIN;
-            }
-            sum = sum * 10 + digit;
+            num = num * 10 + (s[i] - '0');
+            if (num * sign >= INT_MAX) return INT_MAX;
+            if (num * sign <= INT_MIN) return INT_MIN;
             i++;
         }
-        return (int)(sum * flag);
+        return (int)(num * sign);
     }
 };
