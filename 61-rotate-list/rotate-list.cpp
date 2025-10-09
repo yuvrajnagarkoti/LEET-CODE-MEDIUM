@@ -14,15 +14,14 @@ public:
     ListNode* rotateRight(ListNode* head, int k)
     {
         if (!head) return head; // handle empty list
-
         vector<int> temp;
         ListNode* t = head;
 
-        while (t != nullptr) {
+        while (t != nullptr)
+        {
             temp.push_back(t->val);
             t = t->next;
         }
-
         int n = temp.size();
         k = k % n;
         if (k == 0) return head; // no rotation needed
