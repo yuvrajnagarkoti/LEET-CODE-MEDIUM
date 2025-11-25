@@ -1,14 +1,10 @@
 # Write your MySQL query statement below
+# Write your MySQL query statement below
 select
     case
-        when
-            id=(select max(id) from seat) and mod(id,2) = 1
-            then id
-        when
-            mod(id,2) = 1
-            then id+1
-        else
-            id-1
-    end as id,student
-from seat
+        when id % 2 = 1 and id+1 <= (SELECT MAX(id) FROM Seat) THEN id + 1
+        WHEN id % 2 = 0 THEN id - 1
+        ELSE id
+    END AS id,student
+from Seat
 order by id;
