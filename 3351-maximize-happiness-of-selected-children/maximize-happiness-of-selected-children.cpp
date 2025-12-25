@@ -12,9 +12,7 @@ public:
         long long ans=0;
         for(int i=0;i<k;i++)
         {
-            if(happiness[i]-c < 0)
-                ans+= 0;
-            else
+            if(happiness[i]-c > 0)
                 ans+= happiness[i]-c;
             c++;
         }
