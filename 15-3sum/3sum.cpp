@@ -9,12 +9,13 @@ public:
         {
             if(i>0 && nums[i]==nums[i-1])
                 continue;
-            
+
             int j=i+1;
             int k=n-1;
-            while(j<k)
+            while( j<k )
             {
-                if(nums[j]+nums[k]+nums[i] == 0)
+                int sum=nums[i]+nums[j]+nums[k];
+                if( sum == 0)
                 {
                     ans.push_back({nums[i],nums[j],nums[k]});
                     j++;
@@ -28,7 +29,7 @@ public:
                         k--;
                     }
                 }
-                else if(nums[j]+nums[k]+nums[i] > 0)
+                else if( sum > 0)
                 {
                     k--;
                 }
