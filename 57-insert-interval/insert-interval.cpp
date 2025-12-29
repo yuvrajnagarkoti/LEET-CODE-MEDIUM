@@ -2,13 +2,21 @@ class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval)
     {
-        intervals.push_back(newInterval);
-        sort(intervals.begin(),intervals.end());
+        int i;
+        for(i=0;i<intervals.size();i++)
+        {
+            if( intervals[i][0] > newInterval[0] )
+            {
+                break;
+            }
+        }
+        intervals.insert(intervals.begin()+i,newInterval);
+
         int n=intervals.size();
         vector<vector<int>> ans;
         int low=intervals[0][0];
         int high=intervals[0][1];
-        for(int i=1;i<n;i++)
+        for(i=1;i<n;i++)
         {
 
             int l1=intervals[i][0];
