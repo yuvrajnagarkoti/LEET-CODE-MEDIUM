@@ -3,7 +3,7 @@ public:
     vector<vector<int>> intervalIntersection(vector<vector<int>>& list1, vector<vector<int>>& list2)
     {
         vector<vector<int>> ans;
-        int i = 0, j = 0;
+        int i=0, j=0;
 
         while (i < list1.size() && j < list2.size())
         {
