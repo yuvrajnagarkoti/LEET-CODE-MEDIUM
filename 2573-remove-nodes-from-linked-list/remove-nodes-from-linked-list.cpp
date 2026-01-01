@@ -25,20 +25,23 @@ public:
         {
             if(stk.top() >= rightm)
             {
-                ans.push_back(stk.top());
+                ans.push_back(stk.top());      
+                rightm=stk.top();
             }
-            rightm=max(rightm,stk.top());
             stk.pop();
         }
         temp=head;
         reverse(ans.begin(),ans.end());
-        for(int i=0;i<ans.size()-1;i++)
+        for(int i=0;i<ans.size();i++)
         {
             temp->val=ans[i];
+            if(i == ans.size() - 1)
+            {
+                temp->next = nullptr;
+                break;
+            }
             temp=temp->next;
         }
-        temp->val=ans[ans.size()-1];
-        temp->next=NULL;
         return head;
     }
 };
