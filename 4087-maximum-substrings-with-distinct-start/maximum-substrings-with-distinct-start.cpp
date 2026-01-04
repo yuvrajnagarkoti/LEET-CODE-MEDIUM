@@ -1,10 +1,17 @@
 class Solution {
 public:
-    int maxDistinct(string s)
-    {
-        set<char> s1;
-        for(char c : s)
-            s1.insert(c);
-        return s1.size();
+    int maxDistinct(string s) {
+        int hash[26] = {0};
+        for(char ch : s)
+        {
+
+            hash[ch-97] = 1;
+        }
+        int ans = 0;
+        for(int i : hash)
+        {
+            ans += i ;
+        }
+        return ans;
     }
 };
