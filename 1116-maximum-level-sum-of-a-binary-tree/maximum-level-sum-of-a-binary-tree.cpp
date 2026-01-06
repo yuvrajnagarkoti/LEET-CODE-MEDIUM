@@ -9,40 +9,35 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
+class Solution
+{
+    public:
+    map<int,int> mpp;
+    
+    void preorder(TreeNode* root,int level)
+    {
+        if(root == NULL)
+            return;
+        
+        mpp[level] += root->val;
+        preorder(root->left,level+1);
+        preorder(root->right,level+1);
+    }
+
     int maxLevelSum(TreeNode* root)
     {
-        queue <TreeNode*> q;
+        preorder(root,1);
+
         int ans=INT_MIN;
-        int level=1;
-        int l=0;
-        q.push(root);
-        while(!q.empty())
+        int level=0;
+        for(auto it:mpp)
         {
-            int n=q.size();
-            l++;
-            int sum=0;
-            while(n--)
+            if(it.second > ans)
             {
-                TreeNode* temp=q.front();
-                q.pop();
-                if(temp->left != NULL)
-                {
-                    q.push(temp->left);
-                }
-                if(temp->right != NULL)
-                {
-                    q.push(temp->right);
-                }
-                sum += temp->val;
-            }
-            if(ans < sum)
-            {
-                ans=sum;
-                level=l;
+                ans=it.second;
+                level=it.first;
             }
         }
-    return level;
+        return level;
     }
 };
