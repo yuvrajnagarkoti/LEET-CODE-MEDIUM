@@ -12,7 +12,6 @@ public:
                 high = squares[i][1] + squares[i][2];
         }
 
-        // FIX: use precision-based loop instead of low <= high
         for (int iter = 0; iter < 60; iter++)
         {
             double mid = low + (high - low) / 2.0;
@@ -23,21 +22,19 @@ public:
                 double y = squares[i][1];
                 double l = squares[i][2];
 
-                // FIX: correct area calculation (width * height)
-                double h_down = max(0.0, min(l, mid - y));          // FIX
-                double h_up   = max(0.0, min(l, (y + l) - mid));    // FIX
+                double h_down = max(0.0, min(l, mid - y));
+                double h_up   = max(0.0, min(l, (y + l) - mid));
 
-                downa += l * h_down;   // FIX
-                upa   += l * h_up;     // FIX
+                downa += l * h_down;
+                upa   += l * h_up;
             }
 
-            // FIX: binary search must move using mid, not ++ / --
             if (downa < upa)
-                low = mid;     // FIX
+                low = mid;
             else
-                high = mid;    // FIX
+                high = mid;
         }
 
-        return low; // FIX: return converged value
+        return low;
     }
 };
