@@ -28,8 +28,7 @@ public:
     {
         int maxH = longestConsecutive(hBars) + 1;
         int maxV = longestConsecutive(vBars) + 1;
-
-        int side = min(maxH, maxV);
-        return side * side;
+     
+        return min(maxH, maxV) * min(maxH, maxV);
     }
 };
