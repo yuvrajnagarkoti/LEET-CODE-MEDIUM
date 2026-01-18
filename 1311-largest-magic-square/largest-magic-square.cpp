@@ -37,8 +37,7 @@ public:
                     // Check rows
                     for (int r = i; r < i + size; r++)
                     {
-                        int sum =
-                            row[r][j + size - 1] - (j ? row[r][j - 1] : 0);
+                        int sum = row[r][j + size - 1] - (j ? row[r][j - 1] : 0);
                         if (sum != target)
                         {
                             ok = false;
@@ -52,8 +51,7 @@ public:
                     // Check columns
                     for (int c = j; c < j + size; c++)
                     {
-                        int sum =
-                            col[i + size - 1][c] - (i ? col[i - 1][c] : 0);
+                        int sum = col[i + size - 1][c] - (i ? col[i - 1][c] : 0);
                         if (sum != target)
                         {
                             ok = false;
