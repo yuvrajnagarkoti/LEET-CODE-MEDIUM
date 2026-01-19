@@ -1,32 +1,24 @@
 class Solution {
 public:
-    int nthUglyNumber(int n) {
-        vector<int> ugly(n);
-        ugly[0] = 1;  // first ugly number
+    int nthUglyNumber(int n)
+    {
+        vector<int> dp(n);
+        dp[0] = 1;
 
-        int i2 = 0, i3 = 0, i5 = 0;   // pointers for multiples of 2, 3, and 5
-        int next2 = 2, next3 = 3, next5 = 5;
+        int n2 = 0, n3 = 0, n5 = 0;
 
-        for (int i = 1; i < n; i++)
+        for(int i = 1; i < n; i++)
         {
-            int next = min({next2, next3, next5});
-            ugly[i] = next;
-            if (next == next2)
-            {
-                i2++;
-                next2 = ugly[i2] * 2;
-            }
-            if (next == next3)
-            {
-                i3++;
-                next3 = ugly[i3] * 3;
-            }
-            if (next == next5)
-            {
-                i5++;
-                next5 = ugly[i5] * 5;
-            }
+            int next2 = dp[n2] * 2;
+            int next3 = dp[n3] * 3;
+            int next5 = dp[n5] * 5;
+            dp[i] = min(next2, min(next3, next5));
+
+            if(dp[i] == next2) n2++;
+            if(dp[i] == next3) n3++;
+            if(dp[i] == next5) n5++;
         }
-        return ugly[n - 1];
+
+        return dp[n-1];
     }
 };
