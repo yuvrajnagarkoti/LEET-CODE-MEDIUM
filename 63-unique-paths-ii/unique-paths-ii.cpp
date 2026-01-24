@@ -1,30 +1,42 @@
-class Solution
-{
+using namespace std;
+
+class Solution {
 public:
-    int dp[101][101] = {-1};
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int dp[101][101] = {0};
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
 
-    int rec(int x,int y,vector<vector<int>>& obstacleGrid)
-    {
-        int m=obstacleGrid.size();
-        int n=obstacleGrid[0].size();
-        if(x >= m || y >= n || obstacleGrid[x][y] == 1)
-            return 0;
+        // First cell
+        if (obstacleGrid[0][0] == 1) return 0;
+        dp[0][0] = 1;
 
-        if( x==m-1 && y==n-1)
-            return 1;
-        
-        if( dp[x][y] != -1)
-            return dp[x][y];
-        
-        int left = rec(x+1,y,obstacleGrid);
-        int right = rec(x,y+1,obstacleGrid);
-        
-        return dp[x][y] = left+right;
-    }
+        // First column
+        for (int i = 1; i < m; i++) {
+            if (obstacleGrid[i][0] == 1)
+                dp[i][0] = 0;
+            else
+                dp[i][0] = dp[i - 1][0];
+        }
 
-    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
-    {
-        memset(dp,-1,sizeof(dp));
-        return rec(0,0,obstacleGrid); // x,y,obstacle
+        // First row
+        for (int j = 1; j < n; j++) {
+            if (obstacleGrid[0][j] == 1)
+                dp[0][j] = 0;
+            else
+                dp[0][j] = dp[0][j - 1];
+        }
+
+        // Rest of grid
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (obstacleGrid[i][j] == 1)
+                    dp[i][j] = 0;
+                else
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+
+        return dp[m - 1][n - 1];
     }
 };
