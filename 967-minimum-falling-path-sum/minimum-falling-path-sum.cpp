@@ -6,7 +6,7 @@ public:
         int n = matrix.size();
 
         // out of bounds
-        if (i >= n || j < 0 || j >= n)
+        if (j < 0 || j >= n)
             return 1000000000; // INF
 
         // last row
