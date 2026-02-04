@@ -13,22 +13,26 @@ class Solution
 {
 public:
 
-    void preorder(TreeNode *root,vector<int> &ans,int level)
+    void preorder(TreeNode *root,pair<int,int> &ans,int level)
     {
         if(root == NULL)
             return;
         
-        if(ans.size() < level)
-            ans.push_back(root->val);
+        if(ans.second < level)
+        {
+            
+            ans.first = root->val;
+            ans.second = level;
+        }
         
         preorder(root->left,ans,level+1);
         preorder(root->right,ans,level+1);
     }
     int findBottomLeftValue(TreeNode* root)
     {
-        vector<int> ans;
+        pair<int,int> ans = {0,0};
         preorder(root,ans,1);
 
-        return ans[ans.size()-1];
+        return ans.first;
     }
 };
