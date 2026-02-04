@@ -9,32 +9,28 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
+
+    void preorder(TreeNode *root,vector<int> &ans,int level)
+    {
+        int n = ans.size();
+        if(root == NULL)
+            return;
+        if( n<level)
+            ans.push_back(root->val);
+        if( n >= level )
+            ans[level-1] = max(ans[level-1],root->val);
+        
+        preorder(root->left,ans,level+1);
+        preorder(root->right,ans,level+1);
+    }
     vector<int> largestValues(TreeNode* root)
     {
         vector<int> ans;
-        queue<TreeNode*> q;
-        if(root == NULL)
-            return {};
-        q.push(root);
-        while( !q.empty() )
-        {
-            int n=q.size();
-            int maxe = INT_MIN;
-            for(int i=0;i<n;i++)
-            {
-                TreeNode *node = q.front();
-                q.pop();
-                maxe = max(maxe,node->val);
-                if(node->left != NULL)
-                    q.push(node->left);
-                if(node->right != NULL)
-                    q.push(node->right);
-                
-            }
-            ans.push_back(maxe);
-        }
+        preorder(root,ans,1);
+
         return ans;
     }
 };
