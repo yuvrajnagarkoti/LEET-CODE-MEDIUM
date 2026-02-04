@@ -9,29 +9,26 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
+
+    void preorder(TreeNode *root,vector<int> &ans,int level)
+    {
+        if(root == NULL)
+            return;
+        
+        if(ans.size() < level)
+            ans.push_back(root->val);
+        
+        preorder(root->left,ans,level+1);
+        preorder(root->right,ans,level+1);
+    }
     int findBottomLeftValue(TreeNode* root)
     {
         vector<int> ans;
-        queue<TreeNode*> q;
-        q.push(root);
-        while( !q.empty() )
-        {
-            vector<int> t;
-            int n=q.size();
-            for(int i=0;i<n;i++)
-            {
-                TreeNode *node = q.front();
-                t.push_back(node->val);
-                q.pop();
-                if(node->left != NULL)
-                    q.push(node->left);
-                if(node->right != NULL)
-                    q.push(node->right);
-            }
-            ans=t;
-        }
-        return ans[0];
+        preorder(root,ans,1);
+
+        return ans[ans.size()-1];
     }
 };
