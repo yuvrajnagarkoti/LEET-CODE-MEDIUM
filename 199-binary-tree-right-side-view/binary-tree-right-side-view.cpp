@@ -9,32 +9,25 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
+    void preorder(TreeNode *root,vector<int> &ans,int level)
+    {
+        if(root == NULL)
+            return;
+        
+        if(ans.size() < level)
+            ans.push_back(root->val);
+        
+        preorder(root->right,ans,level+1);
+        preorder(root->left,ans,level+1);
+    }
     vector<int> rightSideView(TreeNode* root)
     {
         vector<int> ans;
-        queue<TreeNode*> q;
-        if(root == NULL)
-            return {};
-        
-        q.push(root);
-        while( !q.empty())
-        {
-            int n=q.size();
-            vector<int> t;
-            TreeNode *temp = NULL;
-            for(int i=0;i<n;i++)
-            {
-                temp = q.front();
-                q.pop();
-                if(temp->left != NULL)
-                    q.push(temp->left);
-                if(temp->right != NULL)
-                    q.push(temp->right);
-            }
-            ans.push_back(temp->val);
-        }
+        preorder(root,ans,1);
+
         return ans;
     }
 };
