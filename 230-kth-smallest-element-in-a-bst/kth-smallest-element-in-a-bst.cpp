@@ -13,19 +13,20 @@ class Solution
 {
 public:
 
-    void inorder(TreeNode *root,vector<int> &dfs)
+    void inorder(TreeNode *root,vector<int> &dfs,int k)
     {
         if(root == NULL)
             return;
-        
-        inorder(root->left,dfs);
+        if(dfs.size() >= k)
+            return;
+        inorder(root->left,dfs,k);
         dfs.push_back(root->val);
-        inorder(root->right,dfs);
+        inorder(root->right,dfs,k);
     }
     int kthSmallest(TreeNode* root, int k)
     {
         vector<int> dfs;
-        inorder(root,dfs);
+        inorder(root,dfs,k);
 
         return dfs[k-1];
     }
