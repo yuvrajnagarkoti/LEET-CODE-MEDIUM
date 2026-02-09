@@ -13,7 +13,7 @@ class Solution
 {
 public:
 
-    int minswaps(vector<int> nums)
+    int minswaps(vector<int> &nums)
     {
         int count=0;
         vector<int> temp(nums.begin(),nums.end());
