@@ -24,11 +24,26 @@ public:
     }
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2)
     {
-        vector<int> ans;
-        dfs(root1,ans);
-        dfs(root2,ans);
+        vector<int> ans1;
+        vector<int> ans2;
+        dfs(root1,ans1);
+        dfs(root2,ans2);
 
-        sort(ans.begin(),ans.end());
+        int i=0,n1=ans1.size();
+        int j=0,n2=ans2.size();
+        vector<int> ans;
+        while(i<n1 && j<n2)
+        {
+            if(ans1[i] < ans2[j])
+                ans.push_back(ans1[i++]);
+            else
+                ans.push_back(ans2[j++]);
+        }
+        while(i<n1)
+            ans.push_back(ans1[i++]);
+        while(j<n2)
+            ans.push_back(ans2[j++]);
+        
         return ans;
     }
 };
