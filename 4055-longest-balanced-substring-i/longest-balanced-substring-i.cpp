@@ -20,9 +20,10 @@ public:
     {
         int n=s.length();
         int ans=0;
+        unordered_map<char,int> mpp;
         for(int i=0;i<n;i++)
         {
-            unordered_map<char,int> mpp;
+            mpp.clear();
             for(int j=i;j<n;j++)
             {
                 mpp[s[j]]++;
