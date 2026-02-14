@@ -1,74 +1,116 @@
-class Solution {
+class Solution
+{
 public:
-    int mono(const string& s){
-        if(s.empty()) return 0;
-        int cnt = 1;
-        int ans = 1;
-        for(int i = 1; i < (int)s.size(); i ++){
-            if(s[i] == s[i - 1]) cnt++;
-            else cnt = 1;
-            ans = max(ans, cnt);
-        }
-        return ans;
-    }
 
-    int duo(const string& s, char c1, char c2){
-        map<int, int> pos;
-        pos[0] = -1;
-        int ans = 0;
-        int delta = 0;
-        for(int i = 0; i < (int)s.size(); i ++){
-            if(s[i] != c1 && s[i] != c2){
-                pos.clear();
-                pos[0] = i;
-                delta = 0;
-                continue;
-            }
-            if(s[i] == c1){
-                delta++;
-            }
-            else{
-                delta--;
-            }
-            if(pos.find(delta) != pos.end()){
-                ans = max(ans, i - pos[delta]);
-            }
-            else{
-                pos[delta] = i;
-            }
-        }
-        return ans;
-    }
-
-    int trio(const string& s){
-        vector<int> cnt(3, 0);
-
-        map<vector<int>, int> pos;
-        pos[{0, 0}] = -1;
-
+    int long1(string s)
+    {
+        char c = s[0];
+        int index = 0;
         int ans = 0;
 
-        for(int i = 0; i < (int)s.size(); i++){
-            cnt[s[i] - 'a']++;
-
-            vector<int> key = {cnt[1] - cnt[0], cnt[2] - cnt[0]};
-
-            if(pos.find(key) != pos.end()){
-                ans = max(ans, i - pos[key]);
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(c == s[i])
+            {
+                ans = max(ans, i - index + 1);
             }
-            else{
-                pos[key] = i;
+            else
+            {
+                index = i;
+                c = s[i];
             }
         }
         return ans;
     }
-    int longestBalanced(string s) {
-        return max({
-            mono(s),
-            duo(s, 'a', 'b'),
-            duo(s, 'a', 'c'),
-            duo(s, 'b', 'c'),
-            trio(s)
-        });
+
+    int long2(string s, char c1, char c2)
+    {
+        int x = 0;
+        int y = 0;
+        int ans = 0;
+        unordered_map<int,int> mpp;
+
+        mpp[0] = -1;   // FIX: base case
+
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(s[i] != c1 && s[i] != c2)
+            {
+                x = 0;
+                y = 0;
+                mpp.clear();      // reset map for new segment
+                mpp[0] = i;       // FIX: reset base correctly
+            }
+            else
+            {
+                if(s[i] == c1)
+                    x++;
+                else
+                    y++;
+
+                int dif = y - x;
+
+                if(mpp.find(dif) != mpp.end())
+                {
+                    ans = max(ans, i - mpp[dif]);
+                }
+                else
+                {
+                    mpp[dif] = i;   // FIX: store first occurrence only
+                }
+            }
+        }
+        return ans;
+    }
+
+    int long3(string s)
+    {
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        unordered_map<string,int> mpp;
+        int ans = 0;
+
+        mpp["0#0"] = -1;
+
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(s[i] == 'a')
+                x++;
+            else if(s[i] == 'b')
+                y++;
+            else
+                z++;
+
+            int dif1 = y - x;
+            int dif2 = z - y;
+
+            string temp = to_string(dif1) + "#" + to_string(dif2);
+
+            if(mpp.find(temp) != mpp.end())
+            {
+                ans = max(ans, i - mpp[temp]);
+            }
+            else
+            {
+                mpp[temp] = i;
+            }
+        }
+        return ans;
+    }
+
+    int longestBalanced(string s)
+    {
+        int ans = 0;
+
+        ans = max(ans, long1(s));
+        ans = max({ ans,
+                    long2(s,'a','b'),
+                    long2(s,'b','c'),
+                    long2(s,'c','a') });
+
+        ans = max(ans, long3(s));
+
+        return ans;
     }
 };
