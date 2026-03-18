@@ -13,14 +13,10 @@ public:
         if(grid[i][j] == '1')
         {
             grid[i][j] = '$';
-            if(i+1 < n)
-                check(i+1,j,grid);
-            if(j+1 < m)
-                check(i,j+1,grid);
-            if(i-1 >= 0)
-                check(i-1,j,grid);
-            if(j-1 >= 0)
-                check(i,j-1,grid);
+            check(i+1,j,grid);
+            check(i,j+1,grid);
+            check(i-1,j,grid);
+            check(i,j-1,grid);
         }
     }
 
