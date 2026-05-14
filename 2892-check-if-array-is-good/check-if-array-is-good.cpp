@@ -2,22 +2,20 @@ class Solution {
 public:
     bool isGood(vector<int>& nums)
     {
-        map<int,int> mpp;
+        sort(nums.begin(),nums.end());
         int n=nums.size();
-        for(int i=0;i<n;i++)
-        {
-            mpp[nums[i]]++;
-        }
-        if(mpp.size() != n-1)
+        if(n<2)
             return false;
-        for(auto it : mpp)
+        if(nums[n-1]!=nums[n-2] || n!=nums[n-1]+1)
         {
-            if( (it.first < n-1 && it.second > 1) || (it.first == n-1 && it.second != 2))
+            return false;
+        }
+        for(int i=0;i<n-1;i++)
+        {
+            if(nums[i]!=i+1)
             {
                 return false;
             }
-            if( it.first > n-1)
-                return false;
         }
         return true;
     }
