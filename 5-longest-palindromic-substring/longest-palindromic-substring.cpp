@@ -1,38 +1,32 @@
 class Solution
 {
 public:
-    static bool checkpalin(const string &s, int i, int j)
-    {
-        while (i < j)
-        {
-            if (s[i] != s[j])
-            {
-                return false;
-            }
-            i++;
-            j--;
-        }
-        return true;
-    }
 
-    string longestPalindrome(string s)
+    void check(int left,int right,string s,string &ans)
     {
         int n = s.length();
-        int max_len = 0;
-        string ans = "";
-
-        for (int i = 0; i < n; i++)
+        while(left >=0 && right < n && s[left] == s[right])
         {
-            for (int j = n - 1; j >= i; j--)
-            {
-                if (s[i] == s[j] && (j - i + 1) > max_len && checkpalin(s, i, j))
-                {
-                    ans = s.substr(i, j - i + 1);
-                    max_len = j - i + 1;
-                    break;  // No need to check smaller substrings for this i
-                }
-            }
+            left--;
+            right++;
         }
-        return ans;
+
+        if(ans.size() < right-left-1 )
+        {
+            ans = s.substr(left+1,right-left-1);
+        }
+    }
+    string longestPalindrome(string s)
+    {   
+        int n=s.length();
+        if(n==1)
+            return s;
+        string ans = "";
+        for(int i=0;i<n-1;i++)
+        {
+            check(i,i,s,ans);
+            check(i,i+1,s,ans);
+        }
+        return ans; 
     }
 };
