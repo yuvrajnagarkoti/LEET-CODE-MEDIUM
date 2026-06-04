@@ -1,23 +1,26 @@
-class Solution {
+class Solution
+{
 public:
+    set<vector<int>> st;
+    void rec(vector<int> nums,int i,vector<int> temp)
+    {
+        if(i==nums.size())
+            return;
+        st.insert(temp); //not take
+        rec(nums,i+1,temp);
+        temp.push_back(nums[i]);
+        rec(nums,i+1,temp);
+        st.insert(temp); // take
+    }
     vector<vector<int>> subsets(vector<int>& nums)
     {
-        vector<vector<int>> res;
-        vector<int> subset;
-        createSubset(nums, 0, res, subset);
-        return res;        
-    }
-
-    void createSubset(vector<int>& nums, int index, vector<vector<int>>& res, vector<int>& subset) 
-    {   if (index == nums.size())
+        vector<int> temp;
+        rec(nums,0,temp);
+        vector<vector<int>> ans;
+        for(auto &v : st)
         {
-            res.push_back(subset);
-            return;
+            ans.push_back(v);
         }
-        subset.push_back(nums[index]);
-        createSubset(nums, index + 1, res, subset);
-        
-        subset.pop_back();
-        createSubset(nums, index + 1, res, subset);
-    }    
+        return ans;
+    }
 };
