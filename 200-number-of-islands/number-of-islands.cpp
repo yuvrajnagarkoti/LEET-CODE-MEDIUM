@@ -4,17 +4,15 @@ class Solution
     void findland(vector<vector<char>> &grid,int i,int j,vector<vector<int>> &vis)
     {
         int n=grid.size(),m=grid[0].size();
-        if(i>=n || j>=m || i<0 || j<0 || vis[i][j]==1) 
+        if(i>=n || j>=m || i<0 || j<0 || vis[i][j]==1 || grid[i][j]=='0') 
             return;
         
-        if(grid[i][j]=='1')
-        {
-            vis[i][j] = 1;
-            findland(grid,i,j+1,vis);
-            findland(grid,i,j-1,vis);
-            findland(grid,i+1,j,vis);
-            findland(grid,i-1,j,vis);
-        }
+        vis[i][j] = 1;
+        
+        findland(grid,i,j+1,vis);
+        findland(grid,i,j-1,vis);
+        findland(grid,i+1,j,vis);
+        findland(grid,i-1,j,vis);
     }
 
     int numIslands(vector<vector<char>>& grid)
