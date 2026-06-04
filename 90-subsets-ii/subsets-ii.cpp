@@ -2,17 +2,19 @@ class Solution
 {
 public:
     set<vector<int>> st;
-    void rec(vector<int> nums,int i,vector<int> temp)
+    void rec(vector<int> nums,int i,vector<int>temp)
     {
         if(i==nums.size())
+        {
+            sort(temp.begin(),temp.end());
+            st.insert(temp);
             return;
-        sort(temp.begin(),temp.end());
-        st.insert(temp); //not take
-        rec(nums,i+1,temp);
+        }
+        rec(nums,i+1,temp); //not take
+        
         temp.push_back(nums[i]);
-        rec(nums,i+1,temp);
-        sort(temp.begin(),temp.end());
-        st.insert(temp); // take
+        rec(nums,i+1,temp); //take
+        temp.pop_back();
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums)
     {
