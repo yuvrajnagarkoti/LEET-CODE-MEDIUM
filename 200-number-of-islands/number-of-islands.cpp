@@ -1,41 +1,39 @@
 class Solution
 {
-public:
-
-    int count=0;
-    void check(int i,int j,vector<vector<char>>& grid)
+    public:
+    void findland(vector<vector<char>> &grid,int i,int j,vector<vector<int>> &vis)
     {
-        int n=grid.size();
-        int m=grid[0].size();
-        if(i<0 || j<0 || i>=n || j>=m || grid[i][j] != '1')
+        int n=grid.size(),m=grid[0].size();
+        if(i>=n || j>=m || i<0 || j<0 || vis[i][j]==1) 
             return;
         
-        if(grid[i][j] == '1')
+        if(grid[i][j]=='1')
         {
-            grid[i][j] = '$';
-            check(i+1,j,grid);
-            check(i,j+1,grid);
-            check(i-1,j,grid);
-            check(i,j-1,grid);
+            vis[i][j] = 1;
+            findland(grid,i,j+1,vis);
+            findland(grid,i,j-1,vis);
+            findland(grid,i+1,j,vis);
+            findland(grid,i-1,j,vis);
         }
     }
 
     int numIslands(vector<vector<char>>& grid)
-    {   
-        int n=grid.size();
-        int m=grid[0].size();
-
+    {
+        int n=grid.size(),m=grid[0].size();
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        int ans=0;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(grid[i][j] == '1')
+                if(vis[i][j] == 0 && grid[i][j] == '1')
                 {
-                    check(i,j,grid);
-                    count++;
+                    ans++;
+                    findland(grid,i,j,vis);
                 }
             }
         }
-        return count;
+
+        return ans;
     }
 };
