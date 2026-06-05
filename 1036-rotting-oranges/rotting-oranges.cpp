@@ -1,58 +1,73 @@
 class Solution
 {
 public:
+
+    void multibfs(int i,int j,vector<vector<int>>& grid,vector<vector<int>>& vis,queue<pair<int,int>> &q)
+    {
+        int n=grid.size(),m=grid[0].size();
+
+        if(i<0 || j<0 || i>=n || j>=m || vis[i][j] || grid[i][j] != 1)
+            return;
+
+        vis[i][j] = 1;
+        grid[i][j] = 2;
+        q.push({i,j});
+    }
+
+    bool check(vector<vector<int>>& grid)
+    {
+        int n=grid.size(),m=grid[0].size();
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]==1)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     int orangesRotting(vector<vector<int>>& grid)
     {
-        int m = grid.size();
-        int n = grid[0].size();
-        queue<pair<pair<int, int>, int>> q;
+        int n=grid.size(),m=grid[0].size();
 
-        for(int i = 0; i < m; i++)
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        queue<pair<int,int>> q;
+
+        for(int i=0;i<n;i++)
         {
-            for(int j = 0; j < n; j++)
+            for(int j=0;j<m;j++)
             {
-                if(grid[i][j] == 2)
+                if(grid[i][j]==2)
                 {
-                    q.push({{i, j}, 0});
+                    q.push({i,j});
+                    vis[i][j]=1;
                 }
             }
         }
 
-        int row[] = {-1, 0, 1, 0};
-        int col[] = {0, 1, 0, -1};
-        int time = 0;
-
+        int count=0;
         while(!q.empty())
         {
-            int i = q.front().first.first;
-            int j = q.front().first.second;
-            int t = q.front().second;
-            q.pop();
+            if(check(grid))
+                return count;
 
-            time = max(time, t);
-
-            for(int d = 0; d < 4; d++)
+            int limit=q.size();
+            count++;
+            while(limit--)
             {
-                int r = i + row[d];
-                int c = j + col[d];
-                if(r >= 0 && r < m && c >= 0 && c < n && grid[r][c] == 1)
-                {
-                    q.push({{r, c}, t + 1});
-                    grid[r][c] = 2;
-                }
+                int i=q.front().first;
+                int j=q.front().second;
+                q.pop();
+                multibfs(i,j+1,grid,vis,q);
+                multibfs(i,j-1,grid,vis,q);
+                multibfs(i+1,j,grid,vis,q);
+                multibfs(i-1,j,grid,vis,q);
             }
         }
 
-        for(int i = 0; i < m; i++)
-        {
-            for(int j = 0; j < n; j++)
-            {
-                if(grid[i][j] == 1)
-                {
-                    return -1;
-                }
-            }
-        }
-        return time;
+        return check(grid) ? count : -1;
     }
 };
