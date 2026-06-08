@@ -14,17 +14,10 @@ public:
             else
                 n2.push_back(nums[i]);
         }
-        vector<int> ans;
-        for(int i=0;i<n1.size();i++)
-        {
-            ans.push_back(n1[i]);
-        }
+        
         while(p--)
-            ans.push_back(pivot);
-        for(int i=0;i<n2.size();i++)
-        {
-            ans.push_back(n2[i]);
-        }
-        return ans;
+            n1.push_back(pivot);
+        n1.insert(n1.end(),n2.begin(),n2.end());
+        return n1;
     }
 };
