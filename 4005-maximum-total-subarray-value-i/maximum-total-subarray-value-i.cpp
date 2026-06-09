@@ -4,8 +4,7 @@ public:
     {
         long long mn = nums[0];
         long long mx = nums[0];
-        int n=nums.size();
-        for(int i=0;i<n;i++)
+        for(int i=0;i<nums.size();i++)
         {
             if(mn > nums[i])
                 mn = nums[i];
