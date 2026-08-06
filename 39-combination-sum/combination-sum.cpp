@@ -2,30 +2,28 @@ class Solution
 {
     public:
     vector<vector<int>> ans;
-    void rec(int k,vector<int> temp,int sum,vector<int>& candidates, int target)
-    {
-        if(sum == target)
-        {
+    void rec(int idx, vector<int>& temp, vector<int>& candidates, int target) {
+        if (target == 0) {
             ans.push_back(temp);
             return;
         }
-        if(k+1 < candidates.size())
-            rec(k+1,temp,sum,candidates,target);
-        
-        if(sum < target)
-        {
-            temp.push_back(candidates[k]);
-            sum = sum + candidates[k];
-            rec(k,temp,sum,candidates,target);
-            temp.pop_back();
-            sum = sum - candidates[k];
-        }
+
+        if (idx == candidates.size() || target < 0)
+            return;
+
+        // Don't take current element
+        rec(idx + 1, temp, candidates, target);
+
+        // Take current element
+        temp.push_back(candidates[idx]);
+        rec(idx, temp, candidates, target - candidates[idx]);
+        temp.pop_back();
     }
+
     vector<vector<int>> combinationSum(vector<int>& candidates, int target)
     {
-        int sum=0;
         vector<int> temp;
-        rec(0,temp,sum,candidates,target);
+        rec(0, temp, candidates, target);
         return ans;
     }
 };
