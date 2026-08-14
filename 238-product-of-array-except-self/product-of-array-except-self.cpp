@@ -1,22 +1,27 @@
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& nums) 
+    vector<int> productExceptSelf(vector<int>& nums)
     {
-        int n = nums.size();
-        vector<int> ans(n, 1);
-        int prefix = 1;
-        for (int i = 0; i < n; i++) 
+        int n=nums.size();
+        vector<int> pref(n,0);
+        vector<int> postf(n,0);
+        int temp=1;
+        for(int i=0;i<n;i++)
         {
-            ans[i] = prefix;
-            prefix *= nums[i];
+            pref[i]=temp;
+            temp = temp * nums[i];
+        }
+        temp=1;
+        for(int i=n-1;i>=0;i--)
+        {
+            postf[i]=temp;
+            temp = temp * nums[i];
         }
 
-        int suffix = 1;
-        for (int i = n - 1; i >= 0; i--)
+        for(int i=0;i<n;i++)
         {
-            ans[i] *= suffix;
-            suffix *= nums[i];
+            pref[i] = pref[i]*postf[i];
         }
-        return ans;
+        return pref;
     }
 };
