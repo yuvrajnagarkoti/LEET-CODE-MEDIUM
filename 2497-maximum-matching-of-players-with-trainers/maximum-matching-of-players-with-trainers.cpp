@@ -1,24 +1,17 @@
 class Solution {
 public:
-    int matchPlayersAndTrainers(vector<int>& players, vector<int>& trainers)
+    int matchPlayersAndTrainers(vector<int>& g, vector<int>& s) 
     {
-        sort(players.begin(),players.end());
-        sort(trainers.begin(),trainers.end());
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
         int i=0,j=0;
-        int count=0;
-        while( i<players.size() && j<trainers.size())
+        int n=g.size(),m=s.size();
+        while(i<n && j<m)
         {
-            if(players[i] <= trainers[j])
-            {
-                count++;
+            if(g[i] <= s[j])
                 i++;
-                j++;
-            }
-            else if(players[i] > trainers[j])
-            {
-                j++;
-            }
+            j++;
         }
-        return count;
+        return i;
     }
 };
