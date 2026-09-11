@@ -14,7 +14,6 @@ class Solution {
         ListNode slow=head;
         ListNode fast=head;
         ListNode prev=null;
-        ArrayList<Integer> arr= new ArrayList<>();
 
         while(fast != null && fast.next != null)
         {
