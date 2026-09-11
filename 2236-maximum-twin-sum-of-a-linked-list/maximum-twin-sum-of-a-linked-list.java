@@ -13,27 +13,30 @@ class Solution {
     {
         ListNode slow=head;
         ListNode fast=head;
+        ListNode prev=null;
         ArrayList<Integer> arr= new ArrayList<>();
 
         while(fast != null && fast.next != null)
         {
-            arr.add(slow.val);
-            slow=slow.next;
-            fast=fast.next.next;
+            fast = fast.next.next;
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;       
         }
-        int i=arr.size()-1;
+    
+        fast = slow;
+        slow = prev;
         int ans=0;
-        while(i>=0)
+        while(fast != null && slow != null)
         {
+            int t = fast.val+slow.val;
+            if(ans < t)
+                ans = t;
 
-            int temp=arr.get(i)+slow.val;
-            slow = slow.next;
-            i--;
-
-            if(ans < temp)
-                ans=temp;
+            slow=slow.next;
+            fast=fast.next;
         }
-
         return ans;
     }
 }
