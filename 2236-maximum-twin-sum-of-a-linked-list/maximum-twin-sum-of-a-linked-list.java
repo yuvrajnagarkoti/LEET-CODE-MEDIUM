@@ -11,23 +11,27 @@
 class Solution {
     public int pairSum(ListNode head)
     {
-        ArrayList<Integer> arr = new ArrayList<>();
-        ListNode temp = head;
-        while(temp != null)
-        {
-            arr.add(temp.val);
-            temp = temp.next;
-        }
-        int i=0,j=arr.size()-1;
-        int ans=0;
-        while(i<j)
-        {
-            int t=arr.get(i)+arr.get(j);
-            if(ans < t)
-                ans = t;
+        ListNode slow=head;
+        ListNode fast=head;
+        ArrayList<Integer> arr= new ArrayList<>();
 
-            i++;
-            j--;
+        while(fast != null && fast.next != null)
+        {
+            arr.add(slow.val);
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        int i=arr.size()-1;
+        int ans=0;
+        while(i>=0)
+        {
+
+            int temp=arr.get(i)+slow.val;
+            slow = slow.next;
+            i--;
+
+            if(ans < temp)
+                ans=temp;
         }
 
         return ans;
