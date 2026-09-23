@@ -22,11 +22,8 @@ public:
         {
             temp.push_back(root->val);
         }
-        else
-        {
-            dfs(root->left,temp);
-            dfs(root->right,temp);
-        }
+        dfs(root->left,temp);
+        dfs(root->right,temp);
     }
 
     bool leafSimilar(TreeNode* root1, TreeNode* root2)
