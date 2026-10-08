@@ -1,32 +1,29 @@
-class Solution
-{
+class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals)
+    vector<vector<int>> merge(vector<vector<int>>& nums)
     {
-        sort(intervals.begin(),intervals.end());
+        sort(nums.begin(),nums.end());
+        int low=nums[0][0],high=nums[0][0];
         vector<vector<int>> ans;
 
-        int i=1,n=intervals.size();
-        int low=intervals[0][0];
-        int high=intervals[0][1];
-        while( i < n )
+        for(int i=0;i<nums.size();i++)
         {
-            int l1=intervals[i][0];
-            int h1=intervals[i][1];
-            if( high < l1 )
+            int p1=nums[i][0];
+            int p2=nums[i][1];
+
+            if(high < p1)
             {
-                ans.push_back( {low,high} );
-                low=l1;
-                high=h1;
+                ans.push_back({low,high});
+                low=p1;
+                high=p2;
             }
-            else
+            else if(p1 <= high)
             {
-                low=min(low,l1);
-                high=max(high,h1);
+                high = max(high,p2);
             }
-            i++;
         }
-        ans.push_back( {low,high} );
+        ans.push_back({low,high});
+
         return ans;
     }
 };
