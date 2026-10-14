@@ -1,17 +1,23 @@
 class Solution {
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-        int left = 0, right = arr.size() - 1;
+        int low = 0;
+        int high = arr.size() - k;
 
-        // Shrink the array from both ends until size is k
-        while (right - left >= k) {
-            if (abs(arr[left] - x) > abs(arr[right] - x)) {
-                left++;
+        // Binary search to find the optimal starting index
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            // Compare the distance of x from arr[mid] and arr[mid + k]
+            // We want the window that has closer elements to x
+            if (x - arr[mid] > arr[mid + k] - x) {
+                low = mid + 1; // Window should shift to the right
             } else {
-                right--;
+                high = mid;    // Window should shift to the left or stay
             }
         }
 
-        return vector<int>(arr.begin() + left, arr.begin() + left + k);
+        // Return the k elements starting from 'low'
+        return vector<int>(arr.begin() + low, arr.begin() + low + k);
     }
 };
