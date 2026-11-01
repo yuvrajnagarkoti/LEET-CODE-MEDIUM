@@ -1,24 +1,34 @@
 class Solution {
 public:
+
+    int check(int temp)
+    {
+        int sum = 0;
+
+        while(temp > 0)
+        {
+            int t = temp % 10;
+            sum += t * t;
+            temp /= 10;
+        }
+
+        return sum;
+    }
+
     bool isHappy(int n)
     {
-        map<long long,int> mpp;
-        mpp[n]++;
-        while(n!= 1)
+        unordered_set<int> st;
+
+        while(n != 1)
         {
-            long long sum=0;
-            int temp=n;
-            while(temp>0)
-            {
-                int t=temp%10;
-                temp=temp/10;
-                sum=sum+ (t*t);
-            }
-            mpp[sum]++;
-            n=sum;
-            if(mpp[sum] == 2)
+            if(st.find(n) != st.end())
                 return false;
+
+            st.insert(n);
+
+            n = check(n);
         }
+
         return true;
     }
 };
