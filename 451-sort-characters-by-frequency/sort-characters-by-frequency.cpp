@@ -2,24 +2,38 @@ class Solution {
 public:
     string frequencySort(string s)
     {
-        vector<int> freq(256, 0);
-        for (char c : s) {
-            freq[c]++;
+        map<char,int> mpp;
+
+        for(int i = 0; i < s.length(); i++)
+        {
+            mpp[s[i]]++;
         }
-        vector<pair<char, int>> vec;
-        for (int i = 0; i < 256; ++i) {
-            if (freq[i] > 0) {
-                vec.push_back({(char)i, freq[i]});
-            }
+
+        vector<pair<char,int>> v;
+
+        for(auto it : mpp)
+        {
+            v.push_back({it.first, it.second});
         }
-        sort(vec.begin(),vec.end(),[](const pair <char,int> &a,const pair <char,int> &b)
+
+        sort(v.begin(), v.end(), [](auto a, auto b)
         {
             return a.second > b.second;
         });
-        string result;
-        for (auto& p : vec) {
-            result.append(p.second, p.first);
+
+        string ans = "";
+
+        for(auto it : v)
+        {
+            int count = it.second;
+            char c = it.first;
+
+            while(count--)
+            {
+                ans.push_back(c);
+            }
         }
-        return result;
+
+        return ans;
     }
 };
