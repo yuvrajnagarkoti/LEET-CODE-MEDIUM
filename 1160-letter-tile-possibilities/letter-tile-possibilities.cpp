@@ -1,33 +1,32 @@
 class Solution
 {
     public:
-    set<string> st;
 
-    void rec(string cur,vector<int> vis,string tiles)
+    void rec(vector<int> count,int &ans)
     {
-        st.insert(cur);
-        int n=tiles.size();
-        for(int i=0;i<n;i++)
+        ans++;
+        for(int i=0;i<26;i++)
         {
-            if(vis[i] == 1)
+            if(count[i] <= 0)
                 continue;
 
-            vis[i] = 1;
-            cur.push_back(tiles[i]);
-            rec(cur,vis,tiles);
-            vis[i] = 0;
-            cur.pop_back();
+            count[i]--;
+            rec(count,ans);
+            count[i]++;
         }
-
     }
 
     int numTilePossibilities(string tiles)
     {
-        
-        vector<int> vis(tiles.size(),0);
-        string cur="";
-        
-        rec(cur,vis,tiles);
-        return st.size()-1;
+        vector<int> count(26,0);
+        int ans=0;
+
+        for(int i=0;i<tiles.length();i++)
+        {
+            count[tiles[i]-'A']++;
+        }
+
+        rec(count,ans);
+        return ans-1;
     }
 };
